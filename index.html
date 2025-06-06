@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <!-- Loading Spinner -->
+  <div id="loading-spinner" class="loading-spinner" aria-hidden="true">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Main Application -->
+  <div id="app" class="app-container">
+    <header>
+      <h1>Transport Management System</h1>
+    </header>
+
+    <nav role="tablist" aria-label="Main navigation">
+      <button class="tab-btn active" data-tab="register" role="tab" aria-controls="register" aria-selected="true" id="tab-register">
+        <span class="tab-icon">🚐</span>
+        Register Vehicle
+      </button>
+      <button class="tab-btn" data-tab="occupancy" role="tab" aria-controls="occupancy" aria-selected="false" id="tab-occupancy">
+        <span class="tab-icon">👥</span>
+        Check Occupancy
+      </button>
+      <button class="tab-btn" data-tab="ticket" role="tab" aria-controls="ticket" aria-selected="false" id="tab-ticket">
+        <span class="tab-icon">🎫</span>
+        Issue Ticket
+      </button>
+      <button class="tab-btn" data-tab="parcel" role="tab" aria-controls="parcel" aria-selected="false" id="tab-parcel">
+        <span class="tab-icon">📦</span>
+        Post Parcel
+      </button>
+      <button class="tab-btn" data-tab="transactions" role="tab" aria-controls="transactions" aria-selected="false" id="tab-transactions">
+        <span class="tab-icon">💰</span>
+        Transactions
+      </button>
+      <button class="tab-btn" data-tab="report" role="tab" aria-controls="report" aria-selected="false" id="tab-report">
+        <span class="tab-icon">📊</span>
+        Generate Report
+      </button>
+    </nav>
+
+    <main>
+      <!-- Register Vehicle Section -->
+      <section id="register" class="tab-content active" role="tabpanel" aria-labelledby="tab-register">
+        <div class="card">
+          <h2>Register New Vehicle</h2>
+          <form id="vehicle-form" novalidate>
+            <div class="form-group">
+              <label for="vehicle-name">Vehicle Name *</label>
+              <input type="text" id="vehicle-name" name="vehicleName" required aria-describedby="vehicle-name-error">
+              <span class="error-message" id="vehicle-name-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="number-plate">Number Plate *</label>
+              <input type="text" id="number-plate" name="numberPlate" required pattern="[A-Z]{3}\s[0-9]{3}[A-Z]" 
+                     placeholder="e.g., KCA 123A" aria-describedby="number-plate-error">
+              <span class="error-message" id="number-plate-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="capacity">Passenger Capacity *</label>
+              <input type="number" id="capacity" name="capacity" min="1" max="100" required aria-describedby="capacity-error">
+              <span class="error-message" id="capacity-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="route">Route *</label>
+              <input type="text" id="route" name="route" required placeholder="e.g., Nairobi - Mombasa" aria-describedby="route-error">
+              <span class="error-message" id="route-error" role="alert"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <span class="btn-text">Register Vehicle</span>
+              <span class="btn-loader" aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Check Occupancy Section -->
+      <section id="occupancy" class="tab-content" role="tabpanel" aria-labelledby="tab-occupancy">
+        <div class="card">
+          <h2>Vehicle Occupancy Status</h2>
+          <div class="form-group">
+            <label for="vehicle-select">Select Vehicle</label>
+            <select id="vehicle-select" name="vehicleSelect" aria-describedby="occupancy-details">
+              <option value="">Choose a vehicle...</option>
+            </select>
+          </div>
+          <div id="occupancy-details" class="details-panel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- Issue Ticket Section -->
+      <section id="ticket" class="tab-content" role="tabpanel" aria-labelledby="tab-ticket">
+        <div class="card">
+          <h2>Issue Passenger Ticket</h2>
+          <form id="ticket-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ticket-vehicle-id">Vehicle *</label>
+                <select id="ticket-vehicle-id" name="ticketVehicleId" required aria-describedby="ticket-vehicle-error">
+                  <option value="">Select Vehicle</option>
+                </select>
+                <span class="error-message" id="ticket-vehicle-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="seat-number">Seat Number *</label>
+                <input type="number" id="seat-number" name="seatNumber" min="1" required aria-describedby="seat-number-error">
+                <span class="error-message" id="seat-number-error" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customer-name">Customer Name *</label>
+                <input type="text" id="customer-name" name="customerName" required aria-describedby="customer-name-error">
+                <span class="error-message" id="customer-name-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone-number">Phone Number *</label>
+                <input type="tel" id="phone-number" name="phoneNumber" required 
+                       pattern="(\+254|0)[17]\d{8}" placeholder="e.g., +254712345678" aria-describedby="phone-number-error">
+                <span class="error-message" id="phone-number-error" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ticket-route">Route *</label>
+                <input type="text" id="ticket-route" name="ticketRoute" required aria-describedby="ticket-route-error">
+                <span class="error-message" id="ticket-route-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="ticket-amount">Amount (KES) *</label>
+                <input type="number" id="ticket-amount" name="ticketAmount" min="0" step="0.01" required aria-describedby="ticket-amount-error">
+                <span class="error-message" id="ticket-amount-error" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cashier">Cashier Name *</label>
+              <input type="text" id="cashier" name="cashier" required aria-describedby="cashier-error">
+              <span class="error-message" id="cashier-error" role="alert"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <span class="btn-text">Issue Ticket</span>
+              <span class="btn-loader" aria-hidden="true"></span>
+            </button>
+          </form>
+          
+          <div id="receipt-output" class="receipt-panel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- Post Parcel Section -->
+      <section id="parcel" class="tab-content" role="tabpanel" aria-labelledby="tab-parcel">
+        <div class="card">
+          <h2>Post Parcel Service</h2>
+          <form id="parcel-form" novalidate>
+            <div class="form-group">
+              <label for="parcel-description">Package Description *</label>
+              <input type="text" id="parcel-description" name="parcelDescription" required aria-describedby="parcel-description-error">
+              <span class="error-message" id="parcel-description-error" role="alert"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="origin">Origin *</label>
+                <input type="text" id="origin" name="origin" required aria-describedby="origin-error">
+                <span class="error-message" id="origin-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="destination">Destination *</label>
+                <input type="text" id="destination" name="destination" required aria-describedby="destination-error">
+                <span class="error-message" id="destination-error" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="charge">Shipping Charge (KES) *</label>
+              <input type="number" id="charge" name="charge" min="0" step="0.01" required aria-describedby="charge-error">
+              <span class="error-message" id="charge-error" role="alert"></span>
+            </div>
+
+            <fieldset>
+              <legend>Sender Information</legend>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="sender-name">Sender Name *</label>
+                  <input type="text" id="sender-name" name="senderName" required aria-describedby="sender-name-error">
+                  <span class="error-message" id="sender-name-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="sender-phone">Sender Phone *</label>
+                  <input type="tel" id="sender-phone" name="senderPhone" required 
+                         pattern="(\+254|0)[17]\d{8}" aria-describedby="sender-phone-error">
+                  <span class="error-message" id="sender-phone-error" role="alert"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Receiver Information</legend>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="receiver-name">Receiver Name *</label>
+                  <input type="text" id="receiver-name" name="receiverName" required aria-describedby="receiver-name-error">
+                  <span class="error-message" id="receiver-name-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="receiver-phone">Receiver Phone *</label>
+                  <input type="tel" id="receiver-phone" name="receiverPhone" required 
+                         pattern="(\+254|0)[17]\d{8}" aria-describedby="receiver-phone-error">
+                  <span class="error-message" id="receiver-phone-error" role="alert"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">
+              <span class="btn-text">Post Parcel</span>
+              <span class="btn-loader" aria-hidden="true"></span>
+            </button>
+          </form>
+          
+          <div id="parcel-receipt-output" class="receipt-panel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- Transactions Section -->
+      <section id="transactions" class="tab-content" role="tabpanel" aria-labelledby="tab-transactions">
+        <div class="card">
+          <h2>Transaction History</h2>
+          <div class="form-group">
+            <label for="transaction-period">Select Time Period</label>
+            <select id="transaction-period" name="transactionPeriod">
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+          <div id="transaction-details" class="details-panel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- Reports Section -->
+      <section id="report" class="tab-content" role="tabpanel" aria-labelledby="tab-report">
+        <div class="card">
+          <h2>System Reports</h2>
+          <button id="generate-report" class="btn btn-secondary">
+            <span class="btn-text">Generate Comprehensive Report</span>
+            <span class="btn-loader" aria-hidden="true"></span>
+          </button>
+          <div id="report-details" class="details-panel" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+  <script src="/dist/app.js"></script>
+</body>
+</html>
