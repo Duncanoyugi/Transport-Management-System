@@ -10,10 +10,11 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/axios": "^0.9.36",
-    "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "axios": "^1.9.0"
+    "@types/axios": "^0.14.4",
+    "axios": "^1.6.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "vehicles": [
+    { "id": "1", "registration": "KCA 123X", "capacity": 14, "status": "active" },
+    { "id": "2", "registration": "KCB 456Y", "capacity": 33, "status": "active" }
+  ],
+  "tickets": [],
+  "parcels": [],
+  "receipts": [],
+  "reports": {
+    "vehicles": 2,
+    "tickets": { "count": 0, "total_amount": 0 },
+    "parcels": { "count": 0, "total_amount": 0 },
+    "total_revenue": 0
+  }
+}

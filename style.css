@@ -100,6 +100,7 @@ body {
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: var(--spacing-md);
+  will-change: transform; /* Added for performance optimization */
 }
 
 @keyframes spin {
@@ -159,7 +160,7 @@ nav {
   white-space: nowrap;
   flex: 1;
   justify-content: center;
-  min-width: fit-content;
+  min-width: 0; /* Modified to prevent overflow on narrow screens */
 }
 
 .tab-btn:hover {
@@ -274,6 +275,12 @@ input:valid:not(:focus):not(:placeholder-shown) {
   border-color: var(--success-color);
 }
 
+input::placeholder,
+select::placeholder {
+  color: var(--text-muted); /* Added for placeholder styling */
+  opacity: 0.7;
+}
+
 /* Fieldsets */
 fieldset {
   border: 2px solid var(--border-color);
@@ -349,7 +356,7 @@ fieldset legend {
 }
 
 .btn.loading .btn-text {
-  opacity: 0;
+  visibility: hidden; /* Modified to prevent layout shift */
 }
 
 .btn.loading .btn-loader {
@@ -361,14 +368,15 @@ fieldset legend {
   display: block;
   color: var(--error-color);
   font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
-  min-height: 1rem;
+  margin-top: 0; /* Modified to reduce unnecessary spacing */
+  min-height: 0; /* Modified to reduce unnecessary spacing */
   opacity: 0;
   transition: opacity var(--transition-base);
 }
 
 .error-message.show {
   opacity: 1;
+  margin-top: var(--spacing-xs); /* Added margin only when visible */
 }
 
 /* Details and Receipt Panels */
@@ -427,13 +435,13 @@ fieldset legend {
   font-weight: 500;
   min-width: 300px;
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(100%) scale(0.95); /* Modified for smoother animation */
   transition: all var(--transition-base);
 }
 
 .toast.show {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) scale(1); /* Modified for smoother animation */
 }
 
 .toast.success {
@@ -512,6 +520,26 @@ fieldset legend {
   }
 }
 
+/* Medium Screens */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr; /* Added to maintain two-column layout on tablets */
+  }
+}
+
+/* High-Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --bg-primary: #ffffff;
+    --border-color: #000000;
+  }
+  .btn-primary {
+    background: #0000ff; /* Simplified for high contrast */
+  }
+}
+
 /* Print Styles */
 @media print {
   body {
@@ -519,8 +547,8 @@ fieldset legend {
     color: black;
   }
   
-    .app-container {
-      max-width: none;
-      padding: 0;
-    }
+  .app-container {
+    max-width: none;
+    padding: 0;
   }
+}
